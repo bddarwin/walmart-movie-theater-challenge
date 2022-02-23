@@ -19,3 +19,18 @@ print("\n")
 print("Test Four - Lots more seats taken.\n")
 MovieTheater.movieTheater("SampleData/SampleDataTwo.txt", "Output/OutputDataTwo.txt")
 print("\n")
+
+#Test 5 - Blank File
+print("Test Five - Blank File.\n")
+MovieTheater.movieTheater("SampleData/SampleDataBlank.txt")
+print("\n")
+
+#Test 6 - Invalid Data
+print("Test Six - Invalid Data File.\n")
+MovieTheater.movieTheater("SampleData/SampleDataInvalid.txt")
+print("\n")
+
+#Test 7 - Too many seats.
+print("Test Seven - Too many seats.\n")
+MovieTheater.movieTheater("SampleData/SampleDataOverload.txt", "Output/OutputDataOverload.txt")
+print("\n")

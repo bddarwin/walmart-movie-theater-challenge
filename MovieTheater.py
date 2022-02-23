@@ -36,18 +36,30 @@ def parse_input_file(inputData):
     
     #Default format R000 X where 000 is reservation number and X is number of seats.
     
+    #Check if there's any input data
+    if not inputData:
+       print("Error: Input Data is missing.")
+       return
     #Split on the newline to get each reservation.
     reservations = inputData.split("\n")
     parsedData = dict()
     #Now split each name into a key->value pair.
     for res in reservations:
         this_res = res.split(" ")
-        parsedData[this_res[0]] = int(this_res[1])
+        try:
+            parsedData[this_res[0]] = int(this_res[1])
+        except ValueError:
+            print("Error: Input Data is invalid.")
+            return
     return parsedData
     
 #Assign Seats
 def assign_seats(parsedData):
 
+    #Make sure parsed data is valid
+    if not parsedData:
+        print("Error: Parsed data is invalid.")
+        return
     #Assume we want to start by filling in rows closest to the middle first,
     #with seats towards the middle priority. No one wants to sit on an edge
     #or at the top or bottom of the theater. 
@@ -128,8 +140,9 @@ def assign_seats(parsedData):
         row_letters = ["F", "G", "H", "E", "D", "I", "J", "B"]
     elif(len(rows) == 9):
         row_letters = ["F", "G", "H", "E", "D", "I", "J", "C", "B"]        
-    elif(len(rows) == 10):
+    elif(len(rows) >= 10):
         row_letters = ["F", "G", "H", "E", "D", "I", "J", "C", "B", "A"]
+    
        
        
     assignedSeats = dict()
@@ -140,7 +153,11 @@ def assign_seats(parsedData):
                     #Add the seat to the existing key.
                     assignedSeats[seat].append(str(row_letters[row]) + str(index+1))
                 else:
-                    assignedSeats[seat] = [str(row_letters[row]) + str(index+1)]
+                    if(len(row_letters) > row):
+                        assignedSeats[seat] = [str(row_letters[row]) + str(index+1)]
+                    else:
+                        print("Error: Maximum seats assigned.")
+                        break
 
     assignedSeats = dict(sorted(assignedSeats.items()))
     return assignedSeats
@@ -148,6 +165,9 @@ def assign_seats(parsedData):
 #Output the output file.
 def write_output_file(assignedSeats, name=None): 
 
+    if not assignedSeats:
+        print("Error: Assigned Seats is invalid.")
+        return
     #If we don't have a filename, set one.
     if(name == None):
         name = "Output/AssignedSeats.txt"
@@ -172,7 +192,7 @@ def write_output_file(assignedSeats, name=None):
     
     #Write the contents to the file.
     output_file.write(file_contents)
-    print("File successfully written to: ", name)
+    print("File successfully written to: ", output_file.name)
     return
 
 if __name__ == "__main__":
