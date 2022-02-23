@@ -1,7 +1,7 @@
 import sys, math
 
 #Process the Entire Script.
-def movieTheater(inputFile, outputFile=None):
+def movieTheater(inputFile=None, outputFile=None):
     inputData = get_input_file(inputFile)
     if (inputData != None):
         parsedData = parse_input_file(inputData)
